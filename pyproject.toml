@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "adomvi"
+version = "0.1.0"
+description = "Automated Detection of Military Vehicles from Video Input"
+authors = ["Jonas Renault <jonasrenault@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "~3.10"
+tqdm = "^4.65.0"
+numpy = "^1.24.3"
+ultralytics = "^8.0.114"
+boto3 = "1.17.36"
+kaleido = "0.2.1"
+
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.3.0"
+pre-commit = "^3.3.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
