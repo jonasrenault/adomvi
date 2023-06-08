@@ -12,11 +12,13 @@ numpy = "^1.24.3"
 ultralytics = "^8.0.114"
 boto3 = "1.17.36"
 kaleido = "0.2.1"
+fiftyone = "^0.21.0"
 
 
 [tool.poetry.group.dev.dependencies]
 black = "^23.3.0"
 pre-commit = "^3.3.2"
+jupyterlab = "^4.0.1"
 
 [build-system]
 requires = ["poetry-core"]
