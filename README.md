@@ -40,4 +40,3 @@ A list of image / video datasets used to train a military vehicle detection algo
     * Armored personnel carrier
     * Military cargo truck
     * Main battle tank
-    *
