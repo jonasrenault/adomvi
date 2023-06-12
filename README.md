@@ -26,6 +26,7 @@ poetry install
 
 You can run the notebooks from this project in Google Colab to benefit from GPU acceleration:
 
-<a target="_blank" href="https://colab.research.google.com/github/jonasrenault/adomvi/blob/main/adomvi/TankDetectionYolov8Train.ipynb">
-  <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Train a Yolov8 model"/>
-</a>
+<ul>
+    <li>Train a YOLOv8 model with a custom dataset: <a target="_blank" href="https://colab.research.google.com/github/jonasrenault/adomvi/blob/main/adomvi/TankDetectionYolov8Train.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a></li>
+    <li>Run tracking using the trained model on a sample video: <a target="_blank" href="https://colab.research.google.com/github/jonasrenault/adomvi/blob/main/adomvi/TankTracking.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a></li>
+</ul>
