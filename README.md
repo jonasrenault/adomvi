@@ -11,7 +11,6 @@ This repository contains notebooks and resources used to train a state-of-the-ar
 ## Contents
 
 - The [adomvi](./adomvi/) directory contains jupyter notebooks to create a dataset of military vehicles, use this dataset to finetune a Yolov8 model for object detection, and to run object tracking on video inputs.
-- The [model](./models/) directory contains saved outputs of the training notebook to use a model weights.
 - The [resources](./resources/) directory contains video samples for vehicle detection task.
 
 ## Installation
