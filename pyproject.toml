@@ -8,11 +8,13 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "~3.10"
 tqdm = "^4.65.0"
-numpy = "^1.24.3"
+numpy = "^1.23.1"
 ultralytics = "^8.0.114"
 boto3 = "1.17.36"
 kaleido = "0.2.1"
 fiftyone = "^0.21.0"
+boxmot = "^10.0.14"
+opencv-python = "^4.7.0.72"
 
 
 [tool.poetry.group.dev.dependencies]
