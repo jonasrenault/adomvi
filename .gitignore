@@ -162,4 +162,4 @@ cython_debug/
 
 adomvi/imagenet*
 adomvi/yolov8*
-resources/google
+adomvi/google
