@@ -26,8 +26,8 @@ class GoogleImageScraper:
         search_term: str = "t90",
         max_images: int = 10,
         headless: bool = True,
-        min_resolution: tuple[int, int] = (0, 0),
-        max_resolution: tuple[int, int] = (1920, 1080),
+        min_resolution: tuple[int, int] = (640, 300),
+        max_resolution: tuple[int, int] = (2048, 2048),
     ):
         self.search_term = search_term
         self.max_images = max_images
@@ -213,7 +213,7 @@ class GoogleImageScraper:
 
 if __name__ == "__main__":
     logging.basicConfig(stream=sys.stdout, level=logging.INFO)
-    save_dir = Path("resources/google")
+    save_dir = Path("adomvi/google")
     scraper = GoogleImageScraper(
         save_dir,
         "ebg vulcain",

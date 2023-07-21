@@ -4798,13 +4798,13 @@ devenv = ["black", "check-manifest", "flake8", "pyroma", "pytest (>=4.3)", "pyte
 
 [[package]]
 name = "ultralytics"
-version = "8.0.138"
+version = "8.0.139"
 description = "Ultralytics YOLOv8 for SOTA object detection, multi-object tracking, instance segmentation, pose estimation and image classification."
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "ultralytics-8.0.138-py3-none-any.whl", hash = "sha256:849bf8f73036464a410d4c4e9efeae3afccf8085020bd885390d404d8b7be0fc"},
-    {file = "ultralytics-8.0.138.tar.gz", hash = "sha256:4dc6b1088bef0608ad6aa1ed2742a77f2ad8c052cab73e7e4cd3166878de9e0f"},
+    {file = "ultralytics-8.0.139-py3-none-any.whl", hash = "sha256:be579475f3240fc78e986a7b107f7b6691cb9c6840fd61cdac015a2deecaca57"},
+    {file = "ultralytics-8.0.139.tar.gz", hash = "sha256:a53f0349bd54a74b0e7aea46d331b80e0414f959d58f7da0a4760904d2a4e852"},
 ]
 
 [package.dependencies]
@@ -4823,7 +4823,7 @@ tqdm = ">=4.64.0"
 
 [package.extras]
 dev = ["check-manifest", "coverage", "mkdocs-material", "mkdocs-redirects", "mkdocs-ultralytics-plugin (>=0.0.21)", "mkdocstrings[python]", "pytest", "pytest-cov"]
-export = ["coremltools (>=6.0)", "openvino-dev (>=2023.0)", "tensorflowjs"]
+export = ["coremltools (>=6.0,<=6.2)", "openvino-dev (>=2023.0)", "tensorflowjs"]
 
 [[package]]
 name = "universal-analytics-python3"
