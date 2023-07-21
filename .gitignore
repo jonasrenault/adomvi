@@ -163,3 +163,4 @@ cython_debug/
 adomvi/imagenet*
 adomvi/yolov8*
 adomvi/google
+diffusers
