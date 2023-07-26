@@ -18,7 +18,7 @@ LOGGER = logging.getLogger(__name__)
 
 
 class GoogleImageScraper:
-    KEYWORDS = ["art", "model", "3D", "toy", "RC", "jouet", "jeu", "miniature"]
+    KEYWORDS = ["art", "model", "3D", "toy", "jouet", "jeu", "miniature", "maquette"]
 
     def __init__(
         self,
@@ -216,8 +216,8 @@ if __name__ == "__main__":
     save_dir = Path("adomvi/google")
     scraper = GoogleImageScraper(
         save_dir,
-        "ebg vulcain",
-        max_images=5,
+        "char leclerc",
+        max_images=30,
         min_resolution=(640, 300),
         max_resolution=(2048, 2048),
     )
