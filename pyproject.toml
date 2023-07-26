@@ -15,7 +15,16 @@ kaleido = "0.2.1"
 fiftyone = "^0.21.0"
 boxmot = "^10.0.14"
 opencv-python = "^4.7.0.72"
+selenium = "^4.10.0"
 
+[tool.poetry.group.diffusers.dependencies]
+accelerate = "^0.21.0"
+torchvision = "^0.15.2"
+transformers = "^4.31.0"
+ftfy = "^6.1.1"
+tensorboard = "^2.13.0"
+jinja2 = "^3.1.2"
+matplotlib = "^3.7.2"
 
 [tool.poetry.group.dev.dependencies]
 black = "^23.3.0"
