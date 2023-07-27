@@ -355,25 +355,27 @@ crt = ["awscrt (==0.11.24)"]
 
 [[package]]
 name = "boxmot"
-version = "10.0.16"
+version = "10.0.17"
 description = "SOTA tracking methods for detection, segmentation and pose estimation models."
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "boxmot-10.0.16-py3-none-any.whl", hash = "sha256:8cc88c54f4ee83ad0fe6815259a45bdc667a364484b79ab068621e82a8ac2204"},
-    {file = "boxmot-10.0.16.tar.gz", hash = "sha256:400d33148e0455461fb7673647a80f8d4c4316d9db92f6ed84dd5c593931a969"},
+    {file = "boxmot-10.0.17-py3-none-any.whl", hash = "sha256:83c968e308f81f9740c7fa9a63f20acc09fe78f591ec97294a035925d058d187"},
+    {file = "boxmot-10.0.17.tar.gz", hash = "sha256:1dcd09fb5f0f41d5ecbba0caf43779dfda558c5f81bf4a7b97719407babe1d0d"},
 ]
 
 [package.dependencies]
 filterpy = ">=1.4.5"
 gdown = ">=4.7.1"
 GitPython = ">=3.1.0"
-lapx = ">=0.5.2"
+lapx = ">=0.5.4"
 loguru = ">=0.7.0"
 numpy = "1.23.1"
 opencv-python = ">=4.6.0"
 pandas = ">=1.1.4"
+pre-commit = ">=3.3.3"
 PyYAML = ">=5.3.1"
+tensorboard = ">=2.13.0"
 torch = ">=1.7.0"
 torchvision = ">=0.8.1"
 
@@ -5340,13 +5342,13 @@ devenv = ["black", "check-manifest", "flake8", "pyroma", "pytest (>=4.3)", "pyte
 
 [[package]]
 name = "ultralytics"
-version = "8.0.142"
+version = "8.0.143"
 description = "Ultralytics YOLOv8 for SOTA object detection, multi-object tracking, instance segmentation, pose estimation and image classification."
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "ultralytics-8.0.142-py3-none-any.whl", hash = "sha256:2f93fa158540fe81a83bbe15ba8d0c0c5e1159f3662744d5efee320ac9c6b545"},
-    {file = "ultralytics-8.0.142.tar.gz", hash = "sha256:8702a7cf016cb2b85d1e0b6f4b2356ecd0bbafd0d6dda0f9fa92c7e4edbbcd29"},
+    {file = "ultralytics-8.0.143-py3-none-any.whl", hash = "sha256:6d417efb9001af74b4a22678568b89f95cbf39e13be30c0281707e2ce0eb5e9d"},
+    {file = "ultralytics-8.0.143.tar.gz", hash = "sha256:9649504adedf4cb3c7ca57c637ee61b4fd6c302eccce5da151cf2e8fe341044a"},
 ]
 
 [package.dependencies]
