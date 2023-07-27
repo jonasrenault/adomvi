@@ -116,42 +116,49 @@ class GoogleImageScraper:
         dict[str, str]
             a dict of url -> image title
         """
+
+        # First, do a regular search for the term, and refuse cookie policy popup.
         LOGGER.info(f"Seaching images for {self.search_term}")
-        # First, do a regular search for the term, and refuse cookie policy popup
         self.driver.get(f"https://www.google.com/search?q={self.search_term}")
         self._refuse_rgpd()
 
-        # Click on images search button
+        # Click on images search button.
         LOGGER.info("Clicking Images search button")
         image_search = self.driver.find_element(By.LINK_TEXT, "Images")
         image_search.click()
 
+        # Loop through all the thumbnails, stopping when we found enough images or
+        # when results are exhausted.
         image_urls = {}
-        visited_thumbnails = set()
-        while len(image_urls) < self.max_images:
-            # Scroll to end of page to fetch more results
-            LOGGER.info("Scrolling page.")
-            self.driver.execute_script(
-                "window.scrollTo(0, document.body.scrollHeight);"
-            )
+        visited_thumbnails = []
+        new_results = True
+        while len(image_urls) < self.max_images and new_results:
             # Fetch thumbnails
             LOGGER.info("Fetching thumbnails.")
-            thumbnails = set(self.driver.find_elements(By.CSS_SELECTOR, "img.Q4LuWd"))
+            thumbnails = self.driver.find_elements(By.CSS_SELECTOR, "#islrg img.Q4LuWd")
+
+            # Check that we have new results
+            new_results = len(thumbnails) - len(visited_thumbnails) > 0
             LOGGER.info(
-                f"Found {len(thumbnails)} thumbnails ({len(thumbnails - visited_thumbnails)} new)."
+                f"Found {len(thumbnails)} thumbnails ({len(thumbnails) - len(visited_thumbnails)} new)."
             )
-            # try to click every thumbnail to get the real image behind it
-            for img in tqdm(thumbnails - visited_thumbnails):
+
+            # try to click on every new thumbnail to get the real image behind it
+            for img in tqdm(thumbnails[len(visited_thumbnails) :]):
                 try:
+                    # Using EC.element_to_be_clickable will scroll down to the element
+                    # (the element needs to be in the viewport to be clickable).
+                    # This is important as scrolling down will load more results on the page.
                     WebDriverWait(self.driver, 3).until(
                         EC.element_to_be_clickable(img)
                     ).click()
-                    # img.click()
-                    time.sleep(3)
+                    time.sleep(0.5)
                 except Exception as e:
-                    LOGGER.debug(f"Exception clicking thumbnail {img}", exc_info=True)
+                    LOGGER.warning(f"Exception clicking thumbnail {img}", exc_info=True)
                     continue
 
+                # After clicking on a thumbnail, get the image url and title from the
+                # side panel.
                 url, title = self._extract_image_url()
                 if (
                     url is not None
@@ -159,13 +166,13 @@ class GoogleImageScraper:
                     and url not in self.downloaded_urls
                 ):
                     image_urls[url] = title
-                    LOGGER.info(f"{len(image_urls)}\t{title}\t{url}")
+                    LOGGER.debug(f"{len(image_urls)}\t{title}\t{url}")
 
                 if len(image_urls) >= self.max_images:
                     break
 
             # Keep track of thumbnails already seen
-            visited_thumbnails |= thumbnails
+            visited_thumbnails = thumbnails
         return image_urls
 
     def save_images(self, image_urls: dict[str, str]) -> None:
@@ -181,28 +188,39 @@ class GoogleImageScraper:
                 LOGGER.warning(f"Unable to download image {url}.")
                 continue
 
-            with Image.open(requests.get(url, stream=True).raw) as image:
-                id = uuid4()
-                filename = f"{id}.{image.format}"
-                if image.size is None or (
-                    self.min_resolution[0] <= image.size[0] <= self.max_resolution[0]
-                    and self.min_resolution[1]
-                    <= image.size[1]
-                    <= self.max_resolution[1]
-                ):
-                    try:
-                        image.save(self.save_dir / filename)
-                    except OSError:
-                        image = image.convert("RGB")
-                        image.save(self.save_dir / filename)
+            try:
+                with Image.open(requests.get(url, stream=True).raw) as image:
+                    id = uuid4()
+                    filename = f"{id}.{image.format}"
+                    if image.size is None or (
+                        self.min_resolution[0]
+                        <= image.size[0]
+                        <= self.max_resolution[0]
+                        and self.min_resolution[1]
+                        <= image.size[1]
+                        <= self.max_resolution[1]
+                    ):
+                        try:
+                            image.save(self.save_dir / filename)
+                        except OSError:
+                            image = image.convert("RGB")
+                            image.save(self.save_dir / filename)
 
-                    self.saved_files.append(
-                        {"id": str(id), "url": url, "title": title, "size": image.size}
-                    )
-                else:
-                    LOGGER.info(
-                        f"Not saving image {url} because of invalid dimension ({image.size})"
-                    )
+                        self.saved_files.append(
+                            {
+                                "id": str(id),
+                                "url": url,
+                                "title": title,
+                                "size": image.size,
+                            }
+                        )
+                    else:
+                        LOGGER.info(
+                            f"Not saving image {url} because of invalid dimension ({image.size})"
+                        )
+            except Exception as e:
+                LOGGER.warning(f"Exception saving image {url}", exc_info=True)
+                continue
 
         LOGGER.info("Writing metadata file.")
         # Write metadata
@@ -213,11 +231,11 @@ class GoogleImageScraper:
 
 if __name__ == "__main__":
     logging.basicConfig(stream=sys.stdout, level=logging.INFO)
-    save_dir = Path("adomvi/google")
+    save_dir = Path("adomvi/google/AFV")
     scraper = GoogleImageScraper(
         save_dir,
-        "char leclerc",
-        max_images=30,
+        "leclerc tank",
+        max_images=50,
         min_resolution=(640, 300),
         max_resolution=(2048, 2048),
     )
