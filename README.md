@@ -35,3 +35,14 @@ You can run the notebooks from this project in Google Colab to benefit from GPU 
     <li>03 - Scrape images from google to extend the training dataset: <a target="_blank" href="https://colab.research.google.com/github/jonasrenault/adomvi/blob/main/adomvi/02_TankTracking.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a></li>
     <li>04 - Fine tune Dreambooth to generate images of a tank: <a target="_blank" href="https://colab.research.google.com/github/jonasrenault/adomvi/blob/main/adomvi/04_DreamboothFineTuning.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a></li>
 </ul>
+
+
+## Tracking of military vehicles with multi-class object detection model
+
+Some sample results of tracking different types of military vehicles (AFV, APC, MEV, LAV) using a finetuned yolov8-large model.
+
+<div align="center">
+  <img src="resources/apc.gif" width="640"/>
+  <img src="resources/mev.gif" width="640"/>
+  <img src="resources/lav.gif" width="640"/>
+</div>
