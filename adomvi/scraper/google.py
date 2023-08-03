@@ -1,20 +1,28 @@
+import json
 import logging
 import sys
 import time
-import json
 from pathlib import Path
+from urllib.request import urlopen, Request
+from uuid import uuid4
 
+from PIL import Image
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from tqdm import tqdm
-import requests
-from PIL import Image
-from uuid import uuid4
 
 LOGGER = logging.getLogger(__name__)
+URL_OPEN_HEADERS = {
+    "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.84 Safari/537.36",
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+    "Accept-Charset": "ISO-8859-1,utf-8;q=0.7,*;q=0.3",
+    "Accept-Encoding": "none",
+    "Accept-Language": "en-US,en;q=0.8",
+    "Connection": "keep-alive",
+}
 
 
 class GoogleImageScraper:
@@ -183,13 +191,10 @@ class GoogleImageScraper:
                 LOGGER.info(f"Not downloading {url} as it already exists.")
                 continue
 
-            r = requests.get(url)
-            if r.status_code != 200:
-                LOGGER.warning(f"Unable to download image {url}.")
-                continue
-
             try:
-                with Image.open(requests.get(url, stream=True).raw) as image:
+                with Image.open(
+                    urlopen(Request(url, headers=URL_OPEN_HEADERS))
+                ) as image:
                     id = uuid4()
                     filename = f"{id}.{image.format}"
                     if image.size is None or (
@@ -215,7 +220,7 @@ class GoogleImageScraper:
                             }
                         )
                     else:
-                        LOGGER.info(
+                        LOGGER.debug(
                             f"Not saving image {url} because of invalid dimension ({image.size})"
                         )
             except Exception as e:
@@ -236,7 +241,7 @@ if __name__ == "__main__":
         save_dir,
         "leclerc tank",
         max_images=50,
-        min_resolution=(640, 300),
+        min_resolution=(400, 300),
         max_resolution=(2048, 2048),
     )
     images = scraper.get_image_urls()
