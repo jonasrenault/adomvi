@@ -46,3 +46,9 @@ Some sample results of tracking different types of military vehicles (AFV, APC, 
   <img src="resources/mev.gif" width="640"/>
   <img src="resources/lav.gif" width="640"/>
 </div>
+
+## Generating diversity in our training dataset using Stable Diffusion and dreambooth
+
+<div align="center">
+  <img src="resources/sd-dreambooth.png" width="100%"/>
+</div>
