@@ -4,6 +4,8 @@ version = "0.1.0"
 description = "Automated Detection of Military Vehicles from Video Input"
 authors = ["Jonas Renault <jonasrenault@gmail.com>"]
 readme = "README.md"
+homepage = "https://github.com/jonasrenault/adomvi#readme"
+repository = "https://github.com/jonasrenault/adomvi"
 
 [tool.poetry.dependencies]
 python = "~3.10"
@@ -27,10 +29,35 @@ jinja2 = "^3.1.2"
 matplotlib = "^3.7.2"
 
 [tool.poetry.group.dev.dependencies]
-black = "^23.3.0"
-pre-commit = "^3.3.2"
-jupyterlab = "^4.0.1"
+pre-commit = "^3.7.1"
+jupyterlab = "^4.2.1"
+black = "^24.4.2"
+ruff = "^0.4.7"
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line_length = 90
+target_version = ['py310']
+
+[tool.ruff]
+exclude = [
+    ".venv",
+    ".git",
+    "__pycache__",
+    "build",
+    "dist",
+    "venv",
+    "templates",
+]
+lint.ignore = []
+line-length = 90
+lint.select = [
+    "E",
+    "F",
+    "W",
+    "I001",
+]
+src = ["adomvi", "tests"]
