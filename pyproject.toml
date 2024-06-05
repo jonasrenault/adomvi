@@ -9,24 +9,13 @@ repository = "https://github.com/jonasrenault/adomvi"
 
 [tool.poetry.dependencies]
 python = "~3.10"
-tqdm = "^4.65.0"
-numpy = "^1.23.1"
-ultralytics = "^8.0.114"
-boto3 = "1.17.36"
-kaleido = "0.2.1"
-fiftyone = "^0.21.0"
-boxmot = "^10.0.14"
-opencv-python = "^4.7.0.72"
-selenium = "^4.10.0"
-
-[tool.poetry.group.diffusers.dependencies]
-accelerate = "^0.21.0"
-torchvision = "^0.15.2"
-transformers = "^4.31.0"
-ftfy = "^6.1.1"
-tensorboard = "^2.13.0"
-jinja2 = "^3.1.2"
-matplotlib = "^3.7.2"
+tqdm = "^4.66.4"
+numpy = "^1.26.4"
+ultralytics = "^8.2.28"
+fiftyone = "^0.24.0"
+opencv-python = "^4.10.0.82"
+selenium = "^4.21.0"
+lapx = "^0.5.9"
 
 [tool.poetry.group.dev.dependencies]
 pre-commit = "^3.7.1"
