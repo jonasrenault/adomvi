@@ -160,7 +160,7 @@ cython_debug/
 #.idea/
 .vscode
 
-adomvi/imagenet*
+imagenet/
 adomvi/yolov8*
 adomvi/google
 diffusers
