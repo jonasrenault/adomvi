@@ -161,9 +161,10 @@ cython_debug/
 .vscode
 
 imagenet/
-adomvi/yolov8*
-adomvi/google
+vehicles/
+runs/
 diffusers
+yolo*.pt
 dog
 dogs
 tanks

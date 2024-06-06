@@ -18,6 +18,7 @@ def download_class_names(download_dir: Path) -> dict[str, str]:
     Returns:
         dict[str, str]: dict of class id to class name
     """
+    download_dir.mkdir(exist_ok=True)
     id_file = download_dir / "imagenet21k_wordnet_ids.txt"
     name_file = download_dir / "imagenet21k_wordnet_lemmas.txt"
 
