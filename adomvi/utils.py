@@ -1,7 +1,8 @@
 import logging
-import requests
 import shutil
 from pathlib import Path
+
+import requests
 
 LOG = logging.getLogger()
 

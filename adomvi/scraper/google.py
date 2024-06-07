@@ -3,7 +3,7 @@ import logging
 import sys
 import time
 from pathlib import Path
-from urllib.request import urlopen, Request
+from urllib.request import Request, urlopen
 from uuid import uuid4
 
 from PIL import Image
@@ -161,7 +161,7 @@ class GoogleImageScraper:
                         EC.element_to_be_clickable(img)
                     ).click()
                     time.sleep(0.5)
-                except Exception as e:
+                except Exception:
                     LOGGER.warning(f"Exception clicking thumbnail {img}", exc_info=True)
                     continue
 
@@ -223,7 +223,7 @@ class GoogleImageScraper:
                         LOGGER.debug(
                             f"Not saving image {url} because of invalid dimension ({image.size})"
                         )
-            except Exception as e:
+            except Exception:
                 LOGGER.warning(f"Exception saving image {url}", exc_info=True)
                 continue
 

@@ -1,4 +1,7 @@
+import shutil
+from collections.abc import Iterable
 from pathlib import Path
+
 import fiftyone as fo
 import numpy as np
 import numpy.typing as npt
@@ -9,7 +12,8 @@ def export_yolo_data(
     export_dir: Path,
     classes: list[str],
     label_field="ground_truth",
-    split: list[str] | None = None,
+    split: list[str | None] | str | None = None,
+    overwrite: bool = False,
 ):
     """
     Export a fiftyone DatasetView to a directory in Yolov5Dataset Format.
@@ -19,29 +23,32 @@ def export_yolo_data(
         export_dir (Path): the export directory
         classes (list[str]): the list of classes to export
         label_field (str, optional): the label field to export. Defaults to "ground_truth".
-        split (list[str] | None, optional): the split to export. Defaults to None.
+        split (list[str | None] | str | None, optional): the split to export. Defaults to None.
+        overwrite(bool, optional): delete export_dir if exists. Defaults to False.
     """
-    if type(split) == list:
-        splits = split
-        for split in splits:
-            export_yolo_data(samples, export_dir, classes, label_field, split)
-    else:
-        if split is None:
+    if export_dir.exists() and overwrite:
+        shutil.rmtree(export_dir)
+
+    if not isinstance(split, Iterable):
+        split = [split]
+
+    for s in split:
+        if s is None:
+            s = "val"
             split_view = samples
-            split = "val"
         else:
-            split_view = samples.match_tags(split)
+            split_view = samples.match_tags(s)
 
         split_view.export(
             export_dir=str(export_dir),
             dataset_type=fo.types.YOLOv5Dataset,
             label_field=label_field,
             classes=classes,
-            split=split,
+            split=s,
         )
 
 
-def read_yolo_detections_file(predictions_file: Path) -> npt.NDArray[np.float_]:
+def _read_yolo_detections_file(predictions_file: Path) -> npt.NDArray[np.float_]:
     """
     Read a Yolo detection prediction file into a numpy array
 
@@ -97,7 +104,7 @@ def _get_class_labels(
     return labels
 
 
-def convert_yolo_detections_to_fiftyone(
+def _convert_yolo_detections_to_fiftyone(
     yolo_detections: npt.NDArray[np.float_], class_list: list[str]
 ) -> fo.Detections:
     """
@@ -142,11 +149,15 @@ def add_yolo_detections(
         predictions_dir (Path): the predictions directory
         class_list (list[str]): the class list
     """
+    test_filepaths = test_view.values("filepath")
+    predictions_files = [
+        predictions_dir / Path(fp).with_suffix(".txt").name for fp in test_filepaths
+    ]
     yolo_detections = [
-        read_yolo_detections_file(predictions_file)
-        for predictions_file in predictions_dir.glob("*.txt")
+        _read_yolo_detections_file(predictions_file)
+        for predictions_file in predictions_files
     ]
     detections = [
-        convert_yolo_detections_to_fiftyone(yd, class_list) for yd in yolo_detections
+        _convert_yolo_detections_to_fiftyone(yd, class_list) for yd in yolo_detections
     ]
     test_view.set_values(prediction_field, detections)

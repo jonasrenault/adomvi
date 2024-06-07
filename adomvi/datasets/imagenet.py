@@ -1,9 +1,10 @@
-from pathlib import Path
-from adomvi.utils import download_file
-import re
 import logging
-import tarfile
+import re
 import shutil
+import tarfile
+from pathlib import Path
+
+from adomvi.utils import download_file
 
 LOG = logging.getLogger()
 
