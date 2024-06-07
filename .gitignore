@@ -162,6 +162,7 @@ cython_debug/
 
 imagenet/
 vehicles/
+dataset/
 runs/
 diffusers
 yolo*.pt
