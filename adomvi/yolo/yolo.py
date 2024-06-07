@@ -42,7 +42,8 @@ def predict(
         model_path (str | Path): the model to use for prediction
         source (str | Path): the source of data to predict
         save_txt (bool, optional): save detection results in a txt file. Defaults to True.
-        save_conf (bool, optional): save confidence score for each detection. Defaults to True.
+        save_conf (bool, optional): save confidence score for each detection.
+            Defaults to True.
 
     Returns:
         _type_: _description_

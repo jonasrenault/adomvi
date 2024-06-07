@@ -88,7 +88,8 @@ def download_annotations(class_ids: list[str], dataset_dir: Path) -> list[str]:
         class_label_dir = dataset_dir / "labels" / class_id
         if class_label_dir.exists():
             LOG.info(
-                f"Annotations directory {class_label_dir} already exists. Skipping extract."
+                f"Annotations directory {class_label_dir} already exists. "
+                "Skipping extract."
             )
         else:
             annotations_class_file = annotations_dir / f"{class_id}.tar.gz"

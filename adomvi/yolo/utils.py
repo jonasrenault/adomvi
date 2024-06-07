@@ -22,8 +22,10 @@ def export_yolo_data(
         samples (fo.DatasetView): the dataset view to export
         export_dir (Path): the export directory
         classes (list[str]): the list of classes to export
-        label_field (str, optional): the label field to export. Defaults to "ground_truth".
-        split (list[str | None] | str | None, optional): the split to export. Defaults to None.
+        label_field (str, optional): the label field to export.
+            Defaults to "ground_truth".
+        split (list[str | None] | str | None, optional): the split to export.
+            Defaults to None.
         overwrite(bool, optional): delete export_dir if exists. Defaults to False.
     """
     if export_dir.exists() and overwrite:
@@ -66,7 +68,7 @@ def _read_yolo_detections_file(predictions_file: Path) -> npt.NDArray[np.float_]
         lines = [line.rstrip("\n").split(" ") for line in f]
 
     for line in lines:
-        detection = [float(l) for l in line]
+        detection = [float(val) for val in line]
         detections.append(detection)
     return np.array(detections)
 
@@ -100,7 +102,7 @@ def _get_class_labels(
         list[str]: predicted class labels
     """
     labels = (predicted_classes).astype(int)
-    labels = [class_list[l] for l in labels]
+    labels = [class_list[label] for label in labels]
     return labels
 
 
