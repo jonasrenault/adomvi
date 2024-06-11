@@ -2,6 +2,7 @@ from pathlib import Path
 
 from ultralytics import YOLO
 
+from typing import Union
 
 def train(
     base_model: str | Path,
@@ -46,10 +47,34 @@ def predict(
             Defaults to True.
 
     Returns:
-        _type_: _description_
+        list: A list of detection results.
     """
     model = YOLO(model_path)
 
     # Run inference on the source
     results = model.predict(source, stream=False, save_txt=save_txt, save_conf=save_conf)
+    return results
+
+def track(
+    model_path: str | Path,
+    source: str | Path,
+    conf: float = 0.3,
+    save: bool = True,
+    tracker: str | Path = "botsort.yaml"
+):
+    """
+    Track tanks in a video using a YOLO model and specified tracker.
+
+    Args:
+        model_path (str | Path): Path to the YOLO model weights file.
+        source (str | Path): Path to the source of video to track
+        conf (float, optional): Confidence threshold for detections . Defaults to 0.3.
+        save (bool, optional): Save the processed video with tracked tanks. Defaults to True.
+        tracker (str | Path, optional): The tracker configuration file. Defaults to "botsort.yaml".
+
+    Returns:
+        results: The tracking results, typically including information on detected and tracked tanks.
+    """
+    model = YOLO(model_path)
+    results = model.track(source=source, conf=conf, save=save, tracker=tracker)
     return results
