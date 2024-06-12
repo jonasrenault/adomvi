@@ -1,13 +1,10 @@
 from collections.abc import Iterable
 from pathlib import Path
-from moviepy.editor import VideoFileClip
 
 import shutil
 import fiftyone as fo
 import numpy as np
 import numpy.typing as npt
-import IPython.display as display
-import base64
 
 
 def export_yolo_data(
@@ -166,49 +163,3 @@ def add_yolo_detections(
         _convert_yolo_detections_to_fiftyone(yd, class_list) for yd in yolo_detections
     ]
     test_view.set_values(prediction_field, detections)
-
-
-def convert_video_avi_to_mp4(
-        input_path: Path,
-        output_path: Path,
-        fps: int = 30
-    ):
-    """
-    Convert a video to a specified frame rate using moviepy.
-
-    Args:
-        input_path (str | Path): The path to the input video file.
-        output_path (str | Path): The path to the output video file.
-        fps (int, optional): The frames per second for the output video. Defaults to 30.
-    """
-    input_path = Path(input_path)
-    output_path = Path(output_path)
-    
-    clip = VideoFileClip(str(input_path))
-    
-    clip = clip.set_fps(fps)
-    
-    clip.write_videofile(str(output_path), codec='libx264')
-
-
-def display_video(output_path: Path):
-    """
-    Display the video in a Jupyter notebook using HTML.
-
-    Args:
-        output_path (Path): The path to the output video file.
-    Returns:
-        IPython.display.HTML: An HTML object that display the video in the notebook.
-    """
-    # Convert the video file to a data URL
-    video_path = output_path.resolve()
-    video_url = f'data:video/mp4;base64,{base64.b64encode(video_path.read_bytes()).decode()}'
-
-    # Display the video in the notebook
-    return display.HTML(
-        f"""
-        <video controls width="640">
-            <source src="{video_url}" type="video/mp4">
-        </video>
-        """
-    )

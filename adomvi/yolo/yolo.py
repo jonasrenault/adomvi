@@ -2,7 +2,6 @@ from pathlib import Path
 
 from ultralytics import YOLO
 
-from typing import Union
 
 def train(
     base_model: str | Path,
@@ -55,12 +54,13 @@ def predict(
     results = model.predict(source, stream=False, save_txt=save_txt, save_conf=save_conf)
     return results
 
+
 def track(
     model_path: str | Path,
     source: str | Path,
     conf: float = 0.5,
     save: bool = True,
-    tracker: str | Path = "botsort.yaml"
+    tracker: str | Path = "botsort.yaml",
 ):
     """
     Track tanks in a video using a YOLO model and specified tracker.
