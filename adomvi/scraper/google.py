@@ -3,7 +3,7 @@ import logging
 import sys
 import time
 from pathlib import Path
-from urllib.request import urlopen, Request
+from urllib.request import Request, urlopen
 from uuid import uuid4
 
 from PIL import Image
@@ -16,8 +16,8 @@ from tqdm import tqdm
 
 LOGGER = logging.getLogger(__name__)
 URL_OPEN_HEADERS = {
-    "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.84 Safari/537.36",
-    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+    "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.84 Safari/537.36",  # noqa: E501
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",  # noqa: E501
     "Accept-Charset": "ISO-8859-1,utf-8;q=0.7,*;q=0.3",
     "Accept-Encoding": "none",
     "Accept-Language": "en-US,en;q=0.8",
@@ -51,7 +51,8 @@ class GoogleImageScraper:
         google_home = "https://www.google.com"
         self.driver.get(google_home)
         LOGGER.info(
-            f"Chrome web driver initialized. Page title for {google_home}: {self.driver.title}"
+            f"Chrome web driver initialized. "
+            f"Page title for {google_home}: {self.driver.title}"
         )
 
         self.save_dir = save_dir / search_term
@@ -63,7 +64,7 @@ class GoogleImageScraper:
         self.saved_files = []
         if self.metadata_file.exists():
             with open(self.metadata_file, "r") as f:
-                self.saved_files = [json.loads(l) for l in f.readlines()]
+                self.saved_files = [json.loads(line) for line in f.readlines()]
         self.downloaded_urls = set(map(lambda x: x["url"], self.saved_files))
 
     def _refuse_rgpd(self):
@@ -148,7 +149,8 @@ class GoogleImageScraper:
             # Check that we have new results
             new_results = len(thumbnails) - len(visited_thumbnails) > 0
             LOGGER.info(
-                f"Found {len(thumbnails)} thumbnails ({len(thumbnails) - len(visited_thumbnails)} new)."
+                f"Found {len(thumbnails)} thumbnails "
+                f"({len(thumbnails) - len(visited_thumbnails)} new)."
             )
 
             # try to click on every new thumbnail to get the real image behind it
@@ -156,12 +158,13 @@ class GoogleImageScraper:
                 try:
                     # Using EC.element_to_be_clickable will scroll down to the element
                     # (the element needs to be in the viewport to be clickable).
-                    # This is important as scrolling down will load more results on the page.
+                    # This is important as scrolling down will load more results
+                    # on the page.
                     WebDriverWait(self.driver, 3).until(
                         EC.element_to_be_clickable(img)
                     ).click()
                     time.sleep(0.5)
-                except Exception as e:
+                except Exception:
                     LOGGER.warning(f"Exception clicking thumbnail {img}", exc_info=True)
                     continue
 
@@ -192,15 +195,11 @@ class GoogleImageScraper:
                 continue
 
             try:
-                with Image.open(
-                    urlopen(Request(url, headers=URL_OPEN_HEADERS))
-                ) as image:
+                with Image.open(urlopen(Request(url, headers=URL_OPEN_HEADERS))) as image:
                     id = uuid4()
                     filename = f"{id}.{image.format}"
                     if image.size is None or (
-                        self.min_resolution[0]
-                        <= image.size[0]
-                        <= self.max_resolution[0]
+                        self.min_resolution[0] <= image.size[0] <= self.max_resolution[0]
                         and self.min_resolution[1]
                         <= image.size[1]
                         <= self.max_resolution[1]
@@ -221,9 +220,10 @@ class GoogleImageScraper:
                         )
                     else:
                         LOGGER.debug(
-                            f"Not saving image {url} because of invalid dimension ({image.size})"
+                            f"Not saving image {url} because of invalid dimension "
+                            f"({image.size})"
                         )
-            except Exception as e:
+            except Exception:
                 LOGGER.warning(f"Exception saving image {url}", exc_info=True)
                 continue
 
