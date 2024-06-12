@@ -16,6 +16,7 @@ fiftyone = "^0.24.0"
 opencv-python = "^4.10.0.82"
 selenium = "^4.21.0"
 lapx = "^0.5.9"
+moviepy = "^1.0.3"
 
 [tool.poetry.group.dev.dependencies]
 pre-commit = "^3.7.1"

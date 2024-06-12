@@ -160,10 +160,12 @@ cython_debug/
 #.idea/
 .vscode
 
-adomvi/imagenet*
-adomvi/yolov8*
-adomvi/google
+imagenet/
+vehicles/
+dataset/
+runs/
 diffusers
+yolo*.pt
 dog
 dogs
 tanks
