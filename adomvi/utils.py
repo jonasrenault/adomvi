@@ -2,8 +2,8 @@ import logging
 import shutil
 from pathlib import Path
 
-from moviepy.editor import VideoFileClip
 import requests
+from moviepy.editor import VideoFileClip
 
 LOG = logging.getLogger()
 

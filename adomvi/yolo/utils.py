@@ -1,7 +1,7 @@
+import shutil
 from collections.abc import Iterable
 from pathlib import Path
 
-import shutil
 import fiftyone as fo
 import numpy as np
 import numpy.typing as npt
