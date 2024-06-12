@@ -58,7 +58,7 @@ def predict(
 def track(
     model_path: str | Path,
     source: str | Path,
-    conf: float = 0.3,
+    conf: float = 0.5,
     save: bool = True,
     tracker: str | Path = "botsort.yaml"
 ):
@@ -68,7 +68,7 @@ def track(
     Args:
         model_path (str | Path): Path to the YOLO model weights file.
         source (str | Path): Path to the source of video to track
-        conf (float, optional): Confidence threshold for detections . Defaults to 0.3.
+        conf (float, optional): Confidence threshold for detections . Defaults to 0.5.
         save (bool, optional): Save the processed video with tracked tanks. Defaults to True.
         tracker (str | Path, optional): The tracker configuration file. Defaults to "botsort.yaml".
 
