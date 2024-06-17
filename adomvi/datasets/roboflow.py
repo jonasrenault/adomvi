@@ -1,34 +1,40 @@
 from pathlib import Path
 import shutil
+import logging
 
-def copy_dataset_structure(source_dir: Path, target_dir: Path):
+LOG = logging.getLogger()
+
+
+def restructure_dataset(roboflow_dir: Path):
     """
-    Copy images and labels from the source directory to the target directory.
+    Restructure dataset by copying jpg images to the 'data' directory
+    and xml files to the 'labels' directory from the source directory.
 
     Args:
-        source_dir (Path): The source directory containing the dataset.
-        target_dir (Path): The target directory to copy the dataset into.
+        roboflow_dir (Path): The source directory containing the dataset.
     """
     
-    # Define the mapping from source subdirectories to target subdirectories
-    dir_mapping = {
-        'test/images': 'images/test',
-        'test/labels': 'labels/test',
-        'train/images': 'images/train',
-        'train/labels': 'labels/train',
-        'valid/images': 'images/val',
-        'valid/labels': 'labels/val'
-    }
-
     # Create target subdirectories if they don't exist
-    for target_subdir in dir_mapping.values():
-        (target_dir / target_subdir).mkdir(parents=True, exist_ok=True)
+    (roboflow_dir / 'data').mkdir(parents=True, exist_ok=True)
+    (roboflow_dir / 'labels').mkdir(parents=True, exist_ok=True)
     
-    # Copy files from source to target
-    for source_subdir, target_subdir in dir_mapping.items():
-        source_path = source_dir / source_subdir
-        target_path = target_dir / target_subdir
-        for file in source_path.glob('*'):
-            shutil.copy(file, target_path)
-            print(f"Copied {file} to {target_path}")
+    # Define the source subdirectories
+    source_subdirs = ['test', 'train', 'valid']
+    
+    # Copy jpg and xml files from source to target
+    for source_subdir in source_subdirs:
+        source_path = roboflow_dir / source_subdir
+        
+        # Copy jpg files to 'data'
+        for jpg_file in source_path.glob('*.jpg'):
+            shutil.copy(jpg_file, roboflow_dir / 'data')
+        
+        # Copy xml files to 'labels'
+        for xml_file in source_path.glob('*.xml'):
+            shutil.copy(xml_file, roboflow_dir / 'labels')
+        
+        # Delete the original subdirectory
+        shutil.rmtree(source_path)
+    
+    LOG.info("Dataset dir restructured successfully.")
 
