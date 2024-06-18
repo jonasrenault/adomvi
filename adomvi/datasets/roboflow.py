@@ -56,4 +56,19 @@ def download_roboflow_dataset(url: str, roboflow_dir: Path):
     with zipfile.ZipFile(zipfilename, 'r') as zip:
         zip.extractall(roboflow_dir)
     zipfilename.unlink()
-    LOG.info(f"Download and Extracted to {roboflow_dir} complete")
+    LOG.info(f"Extracted to {roboflow_dir}")
+
+def delete_images_without_labels(dataset):
+    """
+    Delete images without labels from dataset roboflow
+
+    Args:
+        dataset (_type_): The dataset from which to delete samples without labels
+    """
+    samples_to_delete = []
+    for sample in dataset:
+        if not sample.ground_truth.detections:
+            samples_to_delete.append(sample.id)
+    
+    if samples_to_delete:
+        dataset.delete_samples(samples_to_delete)
