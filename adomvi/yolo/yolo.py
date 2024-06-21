@@ -1,6 +1,5 @@
-from pathlib import Path
-
 from ultralytics import YOLO
+from pathlib import Path
 
 
 def train(
@@ -24,9 +23,10 @@ def train(
         device (list[int] | str | None, optional): device to use. Defaults to None.
     """
     model = YOLO(base_model)  # load a pretrained model
-    model.train(
+    results = model.train(
         data=data, epochs=epochs, imgsz=imgsz, batch=batch, device=device, **kwargs
     )
+    return results
 
 
 def predict(
