@@ -174,3 +174,4 @@ adomvi-dream-dog
 adomvi-dream-tank
 inference
 roboflow/
+*.pkl
