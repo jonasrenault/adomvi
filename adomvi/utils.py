@@ -1,9 +1,8 @@
-import fiftyone as fo
 import logging
 import shutil
 from pathlib import Path
 
-
+import fiftyone as fo
 import requests
 from moviepy.editor import VideoFileClip
 

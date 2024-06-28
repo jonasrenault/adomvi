@@ -1,5 +1,6 @@
-from ultralytics import YOLO
 from pathlib import Path
+
+from ultralytics import YOLO
 
 
 def train(

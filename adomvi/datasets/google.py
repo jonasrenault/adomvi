@@ -1,11 +1,11 @@
-from pathlib import Path
 import logging
 import tarfile
-
+from pathlib import Path
 
 from adomvi.utils import download_file
 
 LOG = logging.getLogger()
+
 
 def download_google_dataset(url: str, google_dir: Path):
     """Download and unrar the Google dataset from the given URL.
