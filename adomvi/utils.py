@@ -6,7 +6,7 @@ import fiftyone as fo
 import requests
 from moviepy.editor import VideoFileClip
 
-LOG = logging.getLogger()
+LOG = logging.getLogger(__name__)
 
 
 def download_file(url: str, filename: Path):

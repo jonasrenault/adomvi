@@ -5,7 +5,7 @@ from pathlib import Path
 
 from adomvi.utils import download_file
 
-LOG = logging.getLogger()
+LOG = logging.getLogger(__name__)
 
 
 def restructure_dataset(roboflow_dir: Path):
