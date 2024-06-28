@@ -101,8 +101,7 @@ def _get_class_labels(
     Returns:
         list[str]: predicted class labels
     """
-    labels = (predicted_classes).astype(int)
-    labels = [class_list[label] for label in labels]
+    labels = [class_list[label] for label in predicted_classes.astype(int)]
     return labels
 
 
@@ -119,7 +118,7 @@ def _convert_yolo_detections_to_fiftyone(
     Returns:
         fo.Detections: Detections object
     """
-    detections = []
+    detections: list[fo.Detection] = []
     if yolo_detections.size == 0:
         return fo.Detections(detections=detections)
 

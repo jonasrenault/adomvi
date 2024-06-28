@@ -2,10 +2,11 @@ import logging
 import shutil
 from pathlib import Path
 
+import fiftyone as fo
 import requests
 from moviepy.editor import VideoFileClip
 
-LOG = logging.getLogger()
+LOG = logging.getLogger(__name__)
 
 
 def download_file(url: str, filename: Path):
@@ -39,3 +40,18 @@ def convert_video_avi_to_mp4(
     """
     clip = VideoFileClip(str(input_path)).set_fps(fps)
     clip.write_videofile(str(output_path), codec="libx264")
+
+
+def cleanup_existing_dataset(name: str):
+    """
+    Delete existing dataset before the création
+
+    Args:
+        name (str):  dataset name
+    """
+    if fo.dataset_exists(name):
+        dataset = fo.load_dataset(name)
+        dataset.delete()
+        LOG.info(f"Dataset '{name}' deleted.")
+    else:
+        LOG.info(f"Dataset '{name}' does not exist.")

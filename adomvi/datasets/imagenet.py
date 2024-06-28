@@ -6,7 +6,7 @@ from pathlib import Path
 
 from adomvi.utils import download_file
 
-LOG = logging.getLogger()
+LOG = logging.getLogger(__name__)
 
 
 def download_class_names(download_dir: Path) -> dict[str, str]:

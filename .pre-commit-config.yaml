@@ -13,9 +13,15 @@ repos:
       - id: end-of-file-fixer
       - id: trailing-whitespace
 
+  # disabled because of https://github.com/python-poetry/poetry/issues/9436
+  # - repo: https://github.com/python-poetry/poetry
+  #   rev: '1.8.2'
+  #   hooks:
+  #     - id: poetry-check
+
   # black - formatting
   - repo: https://github.com/psf/black
-    rev: 24.4.2
+    rev: 24.4.0
     hooks:
       - id: black
         name: black
@@ -29,3 +35,12 @@ repos:
     hooks:
       - id: ruff
         name: ruff
+
+  # mypy - lint-like type checking
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.10.1
+    hooks:
+      - id: mypy
+        name: mypy
+        additional_dependencies: [types-requests==2.31.0.20240218]
+        args: [--config-file=pyproject.toml, --ignore-missing-imports]

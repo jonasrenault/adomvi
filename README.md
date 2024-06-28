@@ -6,35 +6,49 @@
 
 ## Introduction
 
-This repository contains notebooks and resources used to train a state-of-the-art military vehicle tracker. Its main focus is on building a dataset of relevant images and annotations to fine-tune pre-trained object detection models, namely a [Yolov8](https://github.com/ultralytics) model. The [yolo-tracking](https://github.com/mikel-brostrom/yolo_tracking) library is used to provide the multi-object tracker algorithm.
+This repository contains notebooks and resources used to train a state-of-the-art military vehicle tracker. Its main focus is on building a dataset of relevant images and annotations to fine-tune pre-trained object detection models, namely a [Yolov8](https://github.com/ultralytics) model.
 
-After a first pass at training such a model from images available from object detection datasets, we explore other options to improve the performance of our model. We use scraping tools to collect more images of military vehicles from Google images. We also extend the classes to be able to discriminate between different types of vehicles: **Armoured Fighting Vehicle (AFV)**, **Armoured Personnel Carrier (APC)**, **Military Engineering Vehicle (MEV)** and **Light armoured vehicle (LAV)**. We provide a sample annotated dataset to test performance improvement from extending our training data.
+We start by building a training dataset from images available in open source object detection datasets (ImageNet, OpenImages, Roboflow). We also use scraping tools to collect more images of military vehicles from Google images. This allows us to define four broad classes of military vehicles that our model can then discriminate: **Armoured Fighting Vehicle (AFV)**, **Armoured Personnel Carrier (APC)**, **Military Engineering Vehicle (MEV)** and **Light Armoured Vehicle (LAV)**. We provide a [sample annotated dataset](https://github.com/jonasrenault/adomvi/releases/tag/v1.2.0) for these classes.
 
 We also explore using [diffusion models](https://huggingface.co/docs/diffusers/using-diffusers/conditional_image_generation) and the [dreambooth](https://huggingface.co/docs/diffusers/training/dreambooth) method to generate new training images in different scenes and conditions.
 
 ## Contents
 
-- The [adomvi](./adomvi/) directory contains jupyter notebooks to create a dataset of military vehicles, use this dataset to finetune a Yolov8 model for object detection, and to run object tracking on video inputs.
+- The [adomvi](./adomvi/) directory contains utility functions to fetch and format datasets for training a Yolov8 model for object detection.
 - The [resources](./resources/) directory contains video samples for vehicle detection task.
+- The [notebooks](./notebooks/) directory contains exemple notebooks on how to
+  1. [Prepare](./notebooks/01_Prepare.ipynb) a custom dataset of images annotated for automatic detection of military vehicles.
+  2. [Train](./notebooks/02_Train.ipynb) train a Yolov8 model using the prepared dataset.
+  3. Run [tracking](./notebooks/03_Track.ipynb) using the trained model on a sample video.
+  4. Fine tune [Dreambooth](./notebooks/04_DreamboothFineTuning.ipynb) to generate images of a tank.
 
 ## Installation
 
-You can install the project locally using [poetry](https://python-poetry.org/) with
+To install the project, clone the repository and install the project in a python environment, either using `pip`
 
 ```console
+git clone git@github.com:jonasrenault/adomvi.git
+cd adomvi
+pip install --editable .
+```
+
+or using [poetry](https://python-poetry.org/)
+
+```console
+git clone git@github.com:jonasrenault/adomvi.git
+cd adomvi
 poetry install
 ```
 
 ## Run the notebooks
 
-You can run the notebooks from this project in Google Colab to benefit from GPU acceleration:
+To run the notebooks, start a jupyter lab server with
 
-<ul>
-    <li>01 - Train a YOLOv8 model with a custom dataset: <a target="_blank" href="https://colab.research.google.com/github/jonasrenault/adomvi/blob/main/adomvi/01_TankDetectionYolov8Train.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a></li>
-    <li>02 - Run tracking using the trained model on a sample video: <a target="_blank" href="https://colab.research.google.com/github/jonasrenault/adomvi/blob/main/adomvi/02_TankTracking.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a></li>
-    <li>03 - Scrape images from google to extend the training dataset: <a target="_blank" href="https://colab.research.google.com/github/jonasrenault/adomvi/blob/main/adomvi/02_TankTracking.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a></li>
-    <li>04 - Fine tune Dreambooth to generate images of a tank: <a target="_blank" href="https://colab.research.google.com/github/jonasrenault/adomvi/blob/main/adomvi/04_DreamboothFineTuning.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a></li>
-</ul>
+```console
+jupyter lab
+```
+
+and open one of the notebooks in the `notebooks` directory.
 
 
 ## Tracking of military vehicles with multi-class object detection model

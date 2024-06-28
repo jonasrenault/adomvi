@@ -11,7 +11,7 @@ repository = "https://github.com/jonasrenault/adomvi"
 python = "~3.10"
 tqdm = "^4.66.4"
 numpy = "^1.26.4"
-ultralytics = "^8.2.28"
+ultralytics = "^8.2.38"
 fiftyone = "^0.24.0"
 opencv-python = "^4.10.0.82"
 selenium = "^4.21.0"
@@ -23,6 +23,14 @@ pre-commit = "^3.7.1"
 jupyterlab = "^4.2.1"
 black = "^24.4.2"
 ruff = "^0.4.7"
+mypy = "^1.10.1"
+
+[tool.poetry.group.stubs]
+optional = true
+
+[tool.poetry.group.stubs.dependencies]
+types-requests = "^2.32.0.20240622"
+types-tqdm = "^4.66.0.20240417"
 
 [build-system]
 requires = ["poetry-core"]
@@ -51,3 +59,7 @@ lint.select = [
     "I001",
 ]
 src = ["adomvi", "tests"]
+
+[tool.mypy]
+files = ["adomvi"]
+disable_error_code = ["import-untyped"]
