@@ -1,0 +1,52 @@
+name: Test
+
+on:
+  # Trigger the workflow on push or pull request,
+  # but only for the main branch
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+env: # environment variables (available in any part of the action)
+  PYTHON_VERSION: "3.10"
+
+jobs:
+  lint-test:
+    name: Run tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Git checkout
+        uses: actions/checkout@v4
+
+      - name: Install poetry
+        run: pipx install poetry
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: "poetry"
+
+      - name: Check Poetry File
+        run: poetry check
+
+      - name: Check lock file
+        run: poetry lock --check
+
+      - name: Install dependencies
+        run: poetry install --no-interaction --no-root --with dev --with stubs
+
+      #   - name: Test with pytest
+      #     run: poetry run pytest
+
+      - name: Run black
+        run: poetry run black --check --config ./pyproject.toml .
+
+      - name: Run mypy
+        run: poetry run mypy --config-file=pyproject.toml
+
+      - name: Run ruff
+        run: poetry run ruff check
