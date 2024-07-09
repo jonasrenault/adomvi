@@ -11,7 +11,7 @@ on:
       - main
 
 env: # environment variables (available in any part of the action)
-  PYTHON_VERSION: 3.10
+  PYTHON_VERSION: "3.10"
 
 jobs:
   lint-test:
