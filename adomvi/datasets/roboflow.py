@@ -1,9 +1,6 @@
 import logging
 import shutil
-import zipfile
 from pathlib import Path
-
-from adomvi.utils import download_file
 
 LOG = logging.getLogger(__name__)
 
@@ -40,23 +37,6 @@ def restructure_dataset(roboflow_dir: Path):
         shutil.rmtree(source_path)
 
     LOG.info("Dataset dir restructured successfully.")
-
-
-def download_roboflow_dataset(url: str, roboflow_dir: Path):
-    """Download and unzip the Roboflow dataset from the given URL.
-
-    Args:
-        url (str): the URL to download.
-        roboflow_dir (Path):  the destination file on disk.
-    """
-    roboflow_dir.mkdir(exist_ok=True)
-    zipfilename = roboflow_dir / "dataset_rf.zip"
-
-    download_file(url, zipfilename)
-    with zipfile.ZipFile(zipfilename, "r") as zip:
-        zip.extractall(roboflow_dir)
-    zipfilename.unlink()
-    LOG.info(f"Extracted to {roboflow_dir}")
 
 
 def delete_images_without_labels(dataset):
