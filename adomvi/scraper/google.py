@@ -10,6 +10,7 @@ from PIL import Image
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
+from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from tqdm import tqdm
@@ -78,7 +79,7 @@ class GoogleImageScraper:
         except Exception as e:
             LOGGER.warning("Exception clicking on refuse cookie button", e)
 
-    def _extract_image_url(self) -> tuple[str, str]:
+    def _extract_image_url(self) -> tuple[str | None, str | None]:
         """
         Look for a valid image tag in the page.
 
@@ -138,8 +139,8 @@ class GoogleImageScraper:
 
         # Loop through all the thumbnails, stopping when we found enough images or
         # when results are exhausted.
-        image_urls = {}
-        visited_thumbnails = []
+        image_urls: dict[str, str] = {}
+        visited_thumbnails: list[WebElement] = []
         new_results = True
         while len(image_urls) < self.max_images and new_results:
             # Fetch thumbnails
@@ -173,6 +174,7 @@ class GoogleImageScraper:
                 url, title = self._extract_image_url()
                 if (
                     url is not None
+                    and title is not None
                     and self._filter_image(url, title)
                     and url not in self.downloaded_urls
                 ):

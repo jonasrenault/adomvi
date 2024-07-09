@@ -30,7 +30,7 @@ def load_search_2_dataset(dataset_dir: Path) -> fo.Dataset:
     for meta in metas:
         imagefp = dataset_dir / f'images/IMG{meta["Image"].zfill(4)}.jpg'
         maskfp = dataset_dir / f'masks/mask{meta["Image"].zfill(2)}.jpg'
-        mask = cv2.imread(maskfp, cv2.IMREAD_GRAYSCALE)
+        mask = cv2.imread(str(maskfp), cv2.IMREAD_GRAYSCALE)
         height, width = mask.shape
 
         # Get normalized bounding box coordinates from X, Y, W, H
