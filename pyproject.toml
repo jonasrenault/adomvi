@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "adomvi"
-version = "0.1.0"
+version = "1.3.0"
 description = "Automated Detection of Military Vehicles from Video Input"
 authors = ["Jonas Renault <jonasrenault@gmail.com>"]
 readme = "README.md"
