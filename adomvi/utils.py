@@ -44,7 +44,7 @@ def convert_video_avi_to_mp4(
 
 def cleanup_existing_dataset(name: str):
     """
-    Delete existing dataset before the création
+    Delete existing dataset before the creation
 
     Args:
         name (str):  dataset name
