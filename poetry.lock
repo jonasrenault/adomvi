@@ -30,18 +30,19 @@ typing-extensions = ">=4.9.0"
 
 [[package]]
 name = "albumentations"
-version = "1.4.10"
+version = "1.4.11"
 description = "An efficient library for image augmentation, providing extensive transformations to support machine learning and computer vision tasks."
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "albumentations-1.4.10-py3-none-any.whl", hash = "sha256:157d252f1a46e3d8d2970553a8eaace39540c90b0395981b4def8660bb933948"},
-    {file = "albumentations-1.4.10.tar.gz", hash = "sha256:739e96afcd1065b3804a6d621b2a95dfec560010a83a2e55c39ba307bdd59f41"},
+    {file = "albumentations-1.4.11-py3-none-any.whl", hash = "sha256:56ca1efd5e886d71c20dfa2f531d9519ec1a6a8dc0d4cdac8f3941969d127cff"},
+    {file = "albumentations-1.4.11.tar.gz", hash = "sha256:91164481d764c25a8ec9ad340e528b84d87ed2acca7298377dede2973457e367"},
 ]
 
 [package.dependencies]
 albucore = ">=0.0.11"
-numpy = ">=1.24.4,<2"
+eval-type-backport = "*"
+numpy = ">=1.24.4"
 opencv-python-headless = ">=4.9.0.80"
 pydantic = ">=2.7.0"
 PyYAML = "*"
@@ -951,6 +952,20 @@ doq = ["aioquic (>=0.9.25)"]
 idna = ["idna (>=3.6)"]
 trio = ["trio (>=0.23)"]
 wmi = ["wmi (>=1.5.1)"]
+
+[[package]]
+name = "eval-type-backport"
+version = "0.2.0"
+description = "Like `typing._eval_type`, but lets older Python versions use newer typing features."
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "eval_type_backport-0.2.0-py3-none-any.whl", hash = "sha256:ac2f73d30d40c5a30a80b8739a789d6bb5e49fdffa66d7912667e2015d9c9933"},
+    {file = "eval_type_backport-0.2.0.tar.gz", hash = "sha256:68796cfbc7371ebf923f03bdf7bef415f3ec098aeced24e054b253a0e78f7b37"},
+]
+
+[package.extras]
+tests = ["pytest"]
 
 [[package]]
 name = "exceptiongroup"
@@ -5502,4 +5517,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "~3.10"
-content-hash = "bd37dfd866664a8e6d3f9cd8d7cee3e5f33e2bacd25da9e3d0172321bcb785cf"
+content-hash = "3a9434530fe3f64ddf9ea8c2d5c628d329547b735d0cec656f230cb616d8ade1"
