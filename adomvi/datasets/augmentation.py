@@ -136,4 +136,4 @@ def augment_dataset(dataset_path: Path, **augmentation_params):
 
         for image_path, label_path in zip(image_paths, label_paths):
             apply_augmentation(image_path, label_path)
-    LOG.info(f"Images and labels saved to {dataset_path}")
+    LOG.info(f"Images and labels augmented and saved into {dataset_path}")
