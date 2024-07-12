@@ -130,26 +130,6 @@ def apply_augmentation(image_path: Path, label_path: Path, augmentation_func):
     return aug_image, aug_bboxes
 
 
-def show_image(image: np.ndarray, bboxes: list):
-    """
-    Display image with bounding boxes.
-
-    Args:
-        image (np.ndarray): Image array.
-        bboxes (list): List of bounding boxes in YOLO format.
-    """
-    for bbox in bboxes:
-        if len(bbox) < 5:
-            continue
-        x_min, y_min, x_max, y_max, class_id = bbox
-        cv2.rectangle(
-            image, (int(x_min), int(y_min)), (int(x_max), int(y_max)), (255, 0, 0), 2
-        )
-    plt.imshow(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
-    plt.axis("off")
-    plt.show()
-
-
 def func_augmentation(image: np.ndarray, bboxes: list):
     """
     List of functions to apply on images and ther labels
