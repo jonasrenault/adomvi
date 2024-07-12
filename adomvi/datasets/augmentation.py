@@ -1,9 +1,11 @@
-import os
+import logging
 import albumentations as A
 import cv2
 import numpy as np
 from matplotlib import pyplot as plt
 from pathlib import Path
+
+LOG = logging.getLogger(__name__)
 
 
 def load_labels(label_path: Path):
@@ -46,7 +48,13 @@ def yolo_to_voc(image_shape: np.ndarray, bboxes: list):
         x_max = (x_center + width / 2) * w
         y_min = (y_center - height / 2) * h
         y_max = (y_center + height / 2) * h
+
+        x_min = max(0, x_min)
+        y_min = max(0, y_min)
+        x_max = min(w, x_max)
+        y_max = min(h, y_max)
         voc_bboxes.append([x_min, y_min, x_max, y_max, class_id])
+
     return voc_bboxes
 
 
@@ -156,7 +164,7 @@ def func_augmentation(image: np.ndarray, bboxes: list):
     transform = A.Compose(
         [
             A.Affine(
-                scale=(0.1, 0.9),  
+                scale=(0.1, 0.9),
                 translate_percent=(-0.3, 0.3),
                 rotate=None,
                 p=1.0,
@@ -192,13 +200,15 @@ def augment_dataset(dataset_path: Path, augmentation_func):
         augmentation_func (callable): Augmentation function to apply to each image and its labels.
     """
 
-    split_dirs = ["train", "test"]
-    for split_name in split_dirs:
+    split_dir = ["test", "train"]
+    for split_name in split_dir:
         image_path = dataset_path / f"images/{split_name}"
         label_path = dataset_path / f"labels/{split_name}"
 
-        image_paths = list(image_path.glob("*"))
-        label_paths = list(label_path.glob("*"))
+        image_paths = sorted(image_path.glob("*"))
+        label_paths = sorted(label_path.glob("*"))
 
         for image_path, label_path in zip(image_paths, label_paths):
             apply_augmentation(image_path, label_path, augmentation_func)
+
+    LOG.info(f"Image and label saved to {dataset_path}")
