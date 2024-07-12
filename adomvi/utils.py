@@ -5,6 +5,7 @@ from pathlib import Path
 import fiftyone as fo
 import requests
 from moviepy.editor import VideoFileClip
+import numpy as np
 
 LOG = logging.getLogger(__name__)
 
