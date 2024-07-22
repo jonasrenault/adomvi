@@ -3,7 +3,6 @@ import torch
 import matplotlib.pyplot as plt
 from mpl_toolkits.axes_grid1 import ImageGrid
 from typing import Dict
-from pathlib import Path
 
 
 def generate_images(
@@ -36,7 +35,6 @@ def generate_images(
         cross_attention_scale (float, optional): Scale for cross attention. Defaults to 0.85.
     """
     # Create inference dir to save images
-    inference_dir = Path(inference_dir)
     inference_dir.mkdir(exist_ok=True)
 
     pipe = DiffusionPipeline.from_pretrained(model_base, torch_dtype=torch.float16, safety_checker=None)
