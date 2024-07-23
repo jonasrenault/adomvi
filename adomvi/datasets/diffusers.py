@@ -22,7 +22,6 @@ def generate_images(
     Generates images using a pretrained diffusion model.
 
     Args:
-        lora_model_id (str): LoRA model directory.
         model_base (str): Base model name or path.
         prompts (Dict[str, str]): Dictionary of prompts for image generation.
         negative_prompt (str): Negative prompt to avoid certain features.
@@ -39,7 +38,6 @@ def generate_images(
 
     pipe = DiffusionPipeline.from_pretrained(model_base, torch_dtype=torch.float16, safety_checker=None)
     pipe = pipe.to("cuda")
-    pipe.load_lora_weights(lora_model_id)
 
     fig = plt.figure(figsize=(20, 12))
     grid = ImageGrid(fig, 111, nrows_ncols=(len(prompts), n_samples_per_prompt), axes_pad=1, aspect=False)
