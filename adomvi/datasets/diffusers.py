@@ -1,4 +1,4 @@
-from diffusers import DiffusionPipeline
+from diffusers import StableDiffusionXLPipeline
 import torch
 import matplotlib.pyplot as plt
 from mpl_toolkits.axes_grid1 import ImageGrid
@@ -37,7 +37,7 @@ def generate_images(
     # Create inference dir to save images
     inference_dir.mkdir(exist_ok=True)
 
-    pipe = DiffusionPipeline.from_pretrained(model_base, torch_dtype=torch.float16, safety_checker=None)
+    pipe = StableDiffusionXLPipeline.from_pretrained(model_base, torch_dtype=torch.float16, safety_checker=None)
     pipe = pipe.to("cuda")
     pipe.load_lora_weights(lora_model_id)
 
