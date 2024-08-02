@@ -171,7 +171,9 @@ dogs
 tanks
 leclerc
 adomvi-dream-dog
-adomvi-dream-tank
+adomvi-dream-*
 inference
+inference_*
 roboflow/
 search_2/
+google
